@@ -39,7 +39,7 @@ export class AppController {
       `?client_id=${this.AZURE_AD_CLIENT_ID}` +
       `&response_type=code` +
       `&redirect_uri=${this.AZURE_AD_CALLBACK_URL}` +
-      `&scope=openid profile email`;
+      `&scope=openid profile email ${this.AZURE_AD_CLIENT_ID}/.default`;
 
     return res.redirect(authUrl);
   }
@@ -55,7 +55,11 @@ export class AppController {
     params.append('code', query.code);
     params.append('redirect_uri', this.AZURE_AD_CALLBACK_URL);
     params.append('client_secret', this.AZURE_AD_SECRET);
-    params.append('scope', 'openid profile email');
+    // If not add ${this.AZURE_AD_CLIENT_ID}/.default to the scope, validation of access_token will fail "Invalid Signature"
+    params.append(
+      'scope',
+      `openid profile email ${this.AZURE_AD_CLIENT_ID}/.default`,
+    );
 
     const tokenRes = await this.httpService
       .post(tokenUrl, params, {
@@ -70,7 +74,10 @@ export class AppController {
         `https://login.microsoftonline.com/${this.AZURE_AD_TENANT_ID}/discovery/v2.0/keys`,
       ),
     );
-    const { payload } = await jwtVerify(tokenRes.data.id_token, jwkSet);
+    let payload = await jwtVerify(tokenRes.data.id_token, jwkSet);
+    this.logger.log(payload);
+
+    payload = await jwtVerify(tokenRes.data.access_token, jwkSet);
     this.logger.log(payload);
 
     return tokenRes.data;

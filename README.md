@@ -27,11 +27,13 @@ $ npm run start:prod
 http://localhost:3000/
 
 ## Azure AD Key URL 
-* https://login.microsoftonline.com/TENANT_ID/.well-known/openid-configuration
-* https://login.microsoftonline.com/common/discovery/keys
+* https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+* https://login.microsoftonline.com/common/discovery/v2.0/keys
 
 
 ## Reference : 
 * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow
 * https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens
 * https://docs.microsoft.com/en-us/azure/active-directory/develop/id-tokens
+* https://jwt.ms/
+* https://blogs.aaddevsup.xyz/2019/03/using-jwt-io-to-verify-the-signature-of-a-jwt-token/
