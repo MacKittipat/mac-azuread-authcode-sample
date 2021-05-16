@@ -34,6 +34,7 @@ export class AppController {
 
   @Get()
   home(@Res() res) {
+    this.logger.log(`Redirecting to Login page`);
     const authUrl =
       `https://login.microsoftonline.com/${this.AZURE_AD_TENANT_ID}/oauth2/v2.0/authorize` +
       `?client_id=${this.AZURE_AD_CLIENT_ID}` +
@@ -46,7 +47,7 @@ export class AppController {
 
   @Get('/callback')
   async callback(@Query() query) {
-    this.logger.log(`Auth code = ${query.code}`);
+    this.logger.log(`Getting token with auth_code=${query.code}`);
     const tokenUrl = `https://login.microsoftonline.com/${this.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`;
 
     const params = new URLSearchParams();
