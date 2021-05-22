@@ -30,6 +30,10 @@ http://localhost:3000/
 * https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
 * https://login.microsoftonline.com/common/discovery/v2.0/keys
 
+## Register app to Azure AD
+![](azad-register-app.PNG "")
+Under Redirect URI, Select Web and enter http://localhost:3000/callback in textbox.
+
 
 ## Reference : 
 * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow
